@@ -1,12 +1,24 @@
 import { Alert, Button, Label, Spinner, TextInput } from "flowbite-react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import {
+  signInFailure,
+  signInSuccess,
+  signInStart,
+} from "../redux/user/userSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function Signin() {
   const [formData, setFormData] = useState({});
-  const [loading, setloading] = useState(false);
-  const [errorMessage, seterrorMessage] = useState(null);
+  // const [loading, setloading] = useState(false);
+  // const [errorMessage, seterrorMessage] = useState(null);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const {
+    currentUser,
+    loading,
+    error: errorMessage,
+  } = useSelector((state) => state.user);
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value.trim() });
   };
@@ -14,11 +26,13 @@ export default function Signin() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.email || !formData.password) {
-      return seterrorMessage("Please fill up all the fields");
+      // return seterrorMessage("Please fill up all the fields");
+      return dispatch(signInFailure("Please fill up all the fields"));
     }
     try {
-      setloading(true);
-      seterrorMessage(null);
+      // setloading(true);
+      // seterrorMessage(null);
+      dispatch(signInStart());
       const res = await fetch("/api/auth/signin", {
         method: "POST",
         headers: {
@@ -28,15 +42,19 @@ export default function Signin() {
       });
       const data = await res.json();
       if (data.success === false) {
-        seterrorMessage(data.message);
+        // seterrorMessage(data.message);
+        return dispatch(signInFailure(data.message));
       }
-      setloading(false);
+      // setloading(false);
       if (res.ok) {
+        dispatch(signInSuccess(data));
         navigate("/");
+        console.log(currentUser);
       }
     } catch (error) {
-      seterrorMessage(error.message);
-      setloading(false);
+      // seterrorMessage(error.message);
+      // setloading(false);
+      dispatch(signInFailure(error.message));
     }
   };
 
@@ -96,7 +114,7 @@ export default function Signin() {
           </form>
 
           <div className="flex gap-2 text-sm mt-5">
-            <span>Don't have an account?</span>
+            <span>Don&apos;t have an account?</span>
             <Link to={"/sign-up"} className="text-blue-500">
               Sign In
             </Link>
