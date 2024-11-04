@@ -7,6 +7,7 @@ import Dashboard from "./pages/Dashboard";
 import Projects from "./pages/Projects";
 import Header from "./components/Header";
 import FooterCom from "./components/FooterCom";
+import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
   return (
@@ -17,7 +18,9 @@ function App() {
         <Route exact path="/about" element={<About />}></Route>
         <Route exact path="/sign-in" element={<Signin />}></Route>
         <Route exact path="/sign-up" element={<Signup />}></Route>
-        <Route exact path="/dashboard" element={<Dashboard />}></Route>
+        <Route exact element={<PrivateRoute />}>
+          <Route exact path="/dashboard" element={<Dashboard />}></Route>
+        </Route>
         <Route exact path="/projects" element={<Projects />}></Route>
       </Routes>
       <FooterCom />

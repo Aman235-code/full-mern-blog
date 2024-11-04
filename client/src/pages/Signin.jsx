@@ -25,6 +25,7 @@ export default function Signin() {
   };
 
   const handleSubmit = async (e) => {
+    console.log("here");
     e.preventDefault();
     if (!formData.email || !formData.password) {
       // return seterrorMessage("Please fill up all the fields");
@@ -109,7 +110,7 @@ export default function Signin() {
                   <span className="pl-3">Loading...</span>
                 </>
               ) : (
-                "Sign Up"
+                "Sign In"
               )}
             </Button>
             <OAuth />
@@ -118,7 +119,7 @@ export default function Signin() {
           <div className="flex gap-2 text-sm mt-5">
             <span>Don&apos;t have an account?</span>
             <Link to={"/sign-up"} className="text-blue-500">
-              Sign In
+              Sign Up
             </Link>
           </div>
           {errorMessage && (
