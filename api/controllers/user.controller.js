@@ -9,6 +9,7 @@ export const test = (req, res) => {
 };
 
 export const updateUser = async (req, res, next) => {
+  console.log("hittttt");
   if (req.user.id !== req.params.userId) {
     return next(errorHandler(403, "You are not allowed to update this user"));
   }
@@ -39,25 +40,30 @@ export const updateUser = async (req, res, next) => {
         errorHandler(400, "Username can only contain letters and numbers")
       );
     }
-
-    try {
-      const updatedUser = await User.findByIdAndUpdate(
-        req.params.userId,
-        {
-          $set: {
-            username: req.body.username,
-            email: req.body.email,
-            profilePicture: req.body.profilePicture,
-            password: req.body.password,
-          },
+  }
+  try {
+    console.log("up");
+    console.log(req.params, req.body);
+    const updatedUser = await User.findByIdAndUpdate(
+      req.params.userId,
+      {
+        $set: {
+          username: req.body.username,
+          email: req.body.email,
+          profilePicture: req.body.profilePicture,
+          password: req.body.password,
         },
-        { new: true }
-      );
-      const { password, ...rest } = updatedUser._doc;
-      return res.json(200).return(rest);
-    } catch (error) {
-      return next(error);
-    }
+      },
+      { new: true }
+    );
+    console.log("down");
+    console.log(updatedUser);
+    const { password, ...rest } = updatedUser._doc;
+    return res
+      .status(200)
+      .json({ message: "Profile Updated Successfully", user: rest });
+  } catch (error) {
+    return next(error);
   }
 };
 

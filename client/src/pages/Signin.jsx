@@ -49,6 +49,7 @@ export default function Signin() {
       }
       // setloading(false);
       if (res.ok) {
+        console.log(data);
         dispatch(signInSuccess(data));
         navigate("/");
         console.log(currentUser);

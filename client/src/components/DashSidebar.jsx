@@ -6,12 +6,12 @@ import { Link, useLocation } from "react-router-dom";
 
 export default function DashSidebar() {
   const location = useLocation();
-  console.log(location);
+  // console.log(location);
   const [tab, settab] = useState("");
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
     const tabFromUrl = urlParams.get("tab");
-    console.log(tabFromUrl);
+    // console.log(tabFromUrl);
     if (tabFromUrl) {
       settab(tabFromUrl);
     }
@@ -31,7 +31,7 @@ export default function DashSidebar() {
               Profile
             </Sidebar.Item>
           </Link>
-          <Sidebar.Item icon={FaSignOutAlt} classname="cursor-pointer">
+          <Sidebar.Item icon={FaSignOutAlt} className="cursor-pointer">
             Sign Out
           </Sidebar.Item>
         </Sidebar.ItemGroup>
