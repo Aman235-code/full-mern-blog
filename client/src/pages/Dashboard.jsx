@@ -5,12 +5,12 @@ import DashProfile from "../components/DashProfile";
 
 export default function Dashboard() {
   const location = useLocation();
-  console.log(location);
+
   const [tab, settab] = useState("");
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
     const tabFromUrl = urlParams.get("tab");
-    console.log(tabFromUrl);
+
     if (tabFromUrl) {
       settab(tabFromUrl);
     }

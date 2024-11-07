@@ -15,17 +15,12 @@ export default function Signin() {
   // const [errorMessage, seterrorMessage] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const {
-    currentUser,
-    loading,
-    error: errorMessage,
-  } = useSelector((state) => state.user);
+  const { loading, error: errorMessage } = useSelector((state) => state.user);
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value.trim() });
   };
 
   const handleSubmit = async (e) => {
-    console.log("here");
     e.preventDefault();
     if (!formData.email || !formData.password) {
       // return seterrorMessage("Please fill up all the fields");
@@ -49,10 +44,8 @@ export default function Signin() {
       }
       // setloading(false);
       if (res.ok) {
-        console.log(data);
         dispatch(signInSuccess(data));
         navigate("/");
-        console.log(currentUser);
       }
     } catch (error) {
       // seterrorMessage(error.message);

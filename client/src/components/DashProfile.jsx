@@ -50,8 +50,7 @@ export default function DashProfile() {
     }
     try {
       dispatch(updateStart());
-      // console.log(currentUser);
-      console.log(formData);
+
       const result = await fetch(`api/user/update/${currentUser.user._id}`, {
         method: "PUT",
         headers: {
@@ -59,10 +58,9 @@ export default function DashProfile() {
         },
         body: JSON.stringify(formData),
       });
-      // console.log(result);
 
       const data = await result.json();
-      console.log(data);
+
       if (!result.ok) {
         dispatch(updateFailure(data.message));
         setupdateUserError(data.message);
@@ -75,8 +73,6 @@ export default function DashProfile() {
       setupdateUserError(error.message);
     }
   };
-
-  // console.log(formData);
 
   return (
     <div className="max-w-lg mx-auto p-3 w-full">
