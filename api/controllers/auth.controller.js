@@ -42,6 +42,7 @@ export const signin = async (req, res, next) => {
 
   try {
     const validUser = await User.findOne({ email });
+
     if (!validUser) {
       return next(errorHandler(400, "User not found"));
     }
@@ -78,7 +79,7 @@ export const google = async (req, res, next) => {
     const user = await User.findOne({ email });
     if (user) {
       const token = jwt.sign(
-        { id: user._id, isAdmin: user.isAdmin },
+        { id: user._id, isAdmin: user.user.isAdmin },
         process.env.JWT_SECRET
       );
       const { password, ...rest } = user._doc;
@@ -103,7 +104,7 @@ export const google = async (req, res, next) => {
       });
       await newUser.save();
       const token = jwt.sign(
-        { id: user._id, isAdmin: user.isAdmin },
+        { id: user._id, isAdmin: user.user.isAdmin },
         process.env.JWT_SECRET
       );
       const { password, ...rest } = user._doc;
