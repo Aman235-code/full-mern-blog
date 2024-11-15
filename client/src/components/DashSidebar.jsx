@@ -5,7 +5,11 @@ import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { signoutSuccess } from "../redux/user/userSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { HiDocumentText, HiOutlineUserGroup } from "react-icons/hi";
+import {
+  HiAnnotation,
+  HiDocumentText,
+  HiOutlineUserGroup,
+} from "react-icons/hi";
 
 export default function DashSidebar() {
   const location = useLocation();
@@ -73,6 +77,18 @@ export default function DashSidebar() {
                 as="div"
               >
                 Users
+              </Sidebar.Item>
+            </Link>
+          )}
+
+          {currentUser.user.isAdmin && (
+            <Link to={"/dashboard?tab=comments"}>
+              <Sidebar.Item
+                active={tab === "comments"}
+                icon={HiAnnotation}
+                as="div"
+              >
+                Comments
               </Sidebar.Item>
             </Link>
           )}

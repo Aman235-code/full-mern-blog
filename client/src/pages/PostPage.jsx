@@ -9,6 +9,7 @@ export default function PostPage() {
   const params = useParams();
   const [loading, setloading] = useState(true);
   const [error, seterror] = useState(false);
+  console.log(error);
   const [post, setpost] = useState(null);
   const [recentPosts, setrecentPosts] = useState(null);
 
